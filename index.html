@@ -6,114 +6,296 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AstralLink Gaming Zone</title>
 <style>
+:root{
+  --gold:#ffcf33;
+  --gold2:#ffe99a;
+  --bg:#050505;
+  --panel:#111318;
+  --line:#8d6c16;
+  --text:#fff;
+  --muted:#b9bac2;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#080808;color:#f5d77b;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 10px;border-bottom:1px solid #8b6b24}
-header h1{margin:0;font-size:28px}
-header p{color:#ddd}
-main{max-width:460px;margin:30px auto;padding:15px}
-.card{background:#141414;border:1px solid #8b6b24;border-radius:20px;padding:25px;margin:20px 0}
-h2{color:#f5d77b}
-input{width:100%;padding:15px;margin:8px 0 18px;background:#080808;border:1px solid #8b6b24;border-radius:10px;color:white;font-size:16px}
-button{width:100%;padding:15px;background:#e9c253;color:#080808;border:0;border-radius:10px;font-size:17px;font-weight:bold;margin-top:10px}
-.small{color:#bbb;text-align:center}
-.package{border:1px solid #8b6b24;border-radius:14px;padding:18px;margin:15px 0;background:#111}
-.price{font-size:25px;font-weight:bold}
-.hidden{display:none}
-a{color:#f5d77b}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  background-image:radial-gradient(ellipse at top,#30220a 0%,#090909 42%,#050505 75%);
+  min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+header{
+  padding:22px 14px;text-align:center;
+  border-bottom:1px solid var(--line);
+  background:#080808eF;
+}
+.logo{font-size:29px;font-weight:900;letter-spacing:1px;color:var(--gold)}
+.logo span{display:block;font-size:12px;letter-spacing:5px;color:#fff;margin-top:5px}
+.topline{color:var(--gold2);font-size:11px;letter-spacing:2px;margin-top:13px}
+main{max-width:540px;margin:auto;padding:20px 14px 100px}
+.panel{
+  background:linear-gradient(145deg,#171717,#0d0e11);
+  border:1px solid var(--line);border-radius:19px;
+  padding:22px;margin:18px 0;
+  box-shadow:0 0 22px #d5a91b12;
+}
+h2{color:var(--gold);margin:0 0 12px;font-size:24px}
+p{line-height:1.55}
+.muted{color:var(--muted)}
+label{display:block;color:var(--gold2);margin:15px 0 7px}
+input{
+  width:100%;padding:14px;border-radius:10px;
+  border:1px solid #685321;background:#080808;color:white;
+  outline:none;
+}
+input:focus{border-color:var(--gold)}
+.btn{
+  display:block;width:100%;padding:14px;border:0;
+  border-radius:10px;background:linear-gradient(100deg,#ffcf33,#ffe99a);
+  color:#15110a;font-weight:900;margin-top:16px;
+}
+.btn:active{transform:scale(.99)}
+.btn.secondary{background:#191919;border:1px solid var(--line);color:var(--gold)}
+.hidden{display:none!important}
+.banner{
+  border:1px solid #bd901f;border-radius:16px;padding:24px 17px;
+  background:linear-gradient(120deg,#211600,#111,#201500);
+  margin-bottom:20px;
+}
+.banner .eyebrow{color:var(--gold);font-size:11px;letter-spacing:3px}
+.banner h2{font-size:27px;margin:10px 0}
+.banner p{margin-bottom:0;color:#ddd}
+.package{
+  border:1px solid #79601d;border-radius:15px;padding:17px;
+  margin:15px 0;background:linear-gradient(140deg,#171717,#090909);
+}
+.package-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.package h3{margin:0;color:var(--gold);font-size:17px}
+.days{font-size:11px;border:1px solid var(--gold);border-radius:20px;padding:5px 9px;color:var(--gold)}
+.amounts{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:20px 0}
+.amounts small{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}
+.amounts strong{font-size:22px}
+.arrow{color:var(--gold);font-size:22px}
+.features{font-size:12px;color:#ccc}
+.qrbox{
+  padding:12px;background:white;border-radius:12px;
+  width:min(100%,290px);margin:18px auto;text-align:center;
+}
+.qrbox img{width:100%;display:block;min-height:150px;object-fit:contain;color:#111}
+.qrbox .qr-placeholder{color:#222;padding:38px 5px;font-size:14px}
+.notice{
+  border:1px solid #58451a;background:#19160e;color:#f5dfa0;
+  border-radius:10px;padding:12px;font-size:12px;line-height:1.5;
+}
+.support-icon{font-size:55px;text-align:center;color:var(--gold)}
+footer{text-align:center;color:#888;font-size:12px;padding:15px}
+nav{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;justify-content:space-around;
+  background:#0b0b0bf5;border-top:1px solid #594718;
+  padding:11px 5px calc(11px + env(safe-area-inset-bottom));
+}
+nav button{background:none;border:0;color:#c7c7c7;font-size:12px;padding:5px}
+nav button b{display:block;font-size:20px;margin-bottom:4px}
+nav button.active{color:var(--gold)}
+.error{color:#ff7777;font-size:13px}
+@media(min-width:600px){
+  main{padding-top:28px}
+  .logo{font-size:34px}
+}
 </style>
 </head>
 <body>
 
 <header>
-<h1>ASTRALLINK</h1>
-<p>GAMING ZONE</p>
+  <div class="logo">♛ ASTRALLINK
+    <span>GAMING ZONE</span>
+  </div>
+  <div class="topline">TRENDING CODES · PLAY · LEVEL UP</div>
 </header>
 
 <main>
-<section id="login" class="card">
-<h2>Welcome Back</h2>
-<p>Login to continue</p>
-<label>Email / Gmail</label>
-<input id="email" type="email" placeholder="Enter your email">
-<label>Password</label>
-<input id="password" type="password" placeholder="Enter password">
-<button onclick="loginUser()">LOGIN</button>
-<p id="error" style="color:#ff7777"></p>
-</section>
+  <!-- LOGIN PAGE -->
+  <section id="loginPage" class="panel">
+    <h2>Welcome Back</h2>
+    <p class="muted">Login to continue to AstralLink Gaming.</p>
+    <form id="loginForm">
+      <label for="email">Email / Gmail</label>
+      <input id="email" type="email" placeholder="Enter your email" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Enter password" required>
+      <button class="btn" type="submit">LOGIN →</button>
+      <p id="loginError" class="error"></p>
+    </form>
+    <p class="muted" style="text-align:center;font-size:12px">AstralLink Gaming Zone</p>
+  </section>
 
-<section id="home" class="hidden">
-<div class="card">
-<h2>🎮 TRENDING CODES</h2>
-<p>Welcome to AstralLink Gaming Zone</p>
-<p class="small">Choose your package · 7 Days</p>
-</div>
+  <!-- HOME PAGE -->
+  <section id="homePage" class="hidden">
+    <div class="banner">
+      <div class="eyebrow">✦ WELCOME TO THE ZONE ✦</div>
+      <h2>TRENDING CODES</h2>
+      <p>PLAY · TOP UP · LEVEL UP</p>
+    </div>
 
-<div class="package">
-<h2>Package 1</h2>
-<p class="price">15,000 → 60,000</p>
-<p>Running Time: 7 Days</p>
-<button onclick="selectPackage('15,000','60,000')">SELECT PACKAGE</button>
-</div>
+    <h2>Available Packages</h2>
+    <p class="muted">Apna package select karein.</p>
 
-<div class="package">
-<h2>Package 2</h2>
-<p class="price">20,000 → 10,000</p>
-<p>Running Time: 7 Days</p>
-<button onclick="selectPackage('20,000','10,000')">SELECT PACKAGE</button>
-</div>
+    <article class="package">
+      <div class="package-head">
+        <h3>♛ PACKAGE 1</h3><span class="days">7 DAYS</span>
+      </div>
+      <div class="amounts">
+        <div><small>PAY AMOUNT</small><strong>15,000</strong></div>
+        <span class="arrow">→</span>
+        <div><small>PACKAGE VALUE</small><strong style="color:var(--gold)">60,000</strong></div>
+      </div>
+      <div class="features">◈ Package details · Running time: 7 days</div>
+      <button class="btn" onclick="openPackage(0)">SELECT PACKAGE →</button>
+    </article>
 
-<div class="package">
-<h2>Package 3</h2>
-<p class="price">30,000 → 150,000</p>
-<p>Running Time: 7 Days</p>
-<button onclick="selectPackage('30,000','150,000')">SELECT PACKAGE</button>
-</div>
+    <article class="package">
+      <div class="package-head">
+        <h3>♛ PACKAGE 2</h3><span class="days">7 DAYS</span>
+      </div>
+      <div class="amounts">
+        <div><small>PAY AMOUNT</small><strong>20,000</strong></div>
+        <span class="arrow">→</span>
+        <div><small>PACKAGE VALUE</small><strong style="color:var(--gold)">10,000</strong></div>
+      </div>
+      <div class="features">◈ Package details · Running time: 7 days</div>
+      <button class="btn" onclick="openPackage(1)">SELECT PACKAGE →</button>
+    </article>
 
-<div class="card">
-<h2>Support</h2>
-<p>Need help? Contact our support team.</p>
-<p id="supportEmail">Support Gmail: Add your Gmail address</p>
-</div>
-<button onclick="logoutUser()">LOG OUT</button>
-</section>
+    <article class="package">
+      <div class="package-head">
+        <h3>♛ PACKAGE 3</h3><span class="days">7 DAYS</span>
+      </div>
+      <div class="amounts">
+        <div><small>PAY AMOUNT</small><strong>30,000</strong></div>
+        <span class="arrow">→</span>
+        <div><small>PACKAGE VALUE</small><strong style="color:var(--gold)">150,000</strong></div>
+      </div>
+      <div class="features">◈ Package details · Running time: 7 days</div>
+      <button class="btn" onclick="openPackage(2)">SELECT PACKAGE →</button>
+    </article>
+    <p class="notice">Payment se pehle amount, package value aur terms ko dhyan se verify karein. Package value guaranteed cash return nahi hai.</p>
+  </section>
 
-<section id="qrpage" class="card hidden">
-<h2>Selected Package</h2>
-<p id="packageDetails"></p>
-<p>Running Time: 7 Days</p>
-<p class="small">QR payment setup abhi add nahi hua hai.</p>
-<button onclick="backHome()">BACK TO HOME</button>
-</section>
+  <!-- QR PAGE -->
+  <section id="qrPage" class="panel hidden">
+    <h2>SCAN &amp; PAY</h2>
+    <p class="muted">Selected package details</p>
+    <div class="package">
+      <h3 id="qrPackageName">PACKAGE 1</h3>
+      <div class="amounts">
+        <div><small>PAY AMOUNT</small><strong id="qrPay">15,000</strong></div>
+        <span class="arrow">→</span>
+        <div><small>PACKAGE VALUE</small><strong id="qrValue" style="color:var(--gold)">60,000</strong></div>
+      </div>
+      <p class="muted">Running Time: <b>7 Days</b></p>
+    </div>
+
+    <div class="qrbox">
+      <img id="qrImage" src="qr-code.png" alt="Your payment QR code"
+           onerror="this.style.display='none';document.getElementById('qrPlaceholder').style.display='block'">
+      <div id="qrPlaceholder" class="qr-placeholder" style="display:none">
+        <b>YOUR QR CODE</b><br><br>
+        Upload your QR image to this GitHub repository<br>
+        and name it <b>qr-code.png</b>
+      </div>
+    </div>
+    <p class="muted" style="text-align:center;font-size:13px">Scan the QR using your preferred payment app.</p>
+    <div class="notice">Payment karne se pehle QR recipient ka naam aur amount verify karein. Yeh website payment ko automatically verify nahi karti.</div>
+    <button class="btn secondary" onclick="showPage('homePage')">← BACK TO HOME</button>
+  </section>
+
+  <!-- SUPPORT PAGE -->
+  <section id="supportPage" class="panel hidden">
+    <div class="support-icon">♧</div>
+    <h2 style="text-align:center">SUPPORT</h2>
+    <p class="muted" style="text-align:center">Need help? Contact our support team.</p>
+    <div class="package">
+      <p style="color:var(--gold)">✉ OUR SUPPORT EMAIL</p>
+      <p id="supportAddress" style="overflow-wrap:anywhere">YOUR_SUPPORT_EMAIL@gmail.com</p>
+      <button class="btn" onclick="sendSupportEmail()">SEND EMAIL →</button>
+    </div>
+    <div class="notice">
+      • Apna issue aur package details likhein.<br>
+      • Apna password ya OTP kisi ke saath share na karein.<br>
+      • Payment ka proof sirf verified support address par bhejein.
+    </div>
+  </section>
 </main>
 
+<nav id="bottomNav" class="hidden">
+  <button id="homeNav" class="active" onclick="showPage('homePage')"><b>⌂</b>Home</button>
+  <button onclick="showPage('homePage')"><b>♛</b>Packages</button>
+  <button onclick="showPage('supportPage')"><b>☏</b>Support</button>
+  <button onclick="logout()"><b>↪</b>Logout</button>
+</nav>
+
+<footer>© <span id="year"></span> AstralLink Gaming Zone</footer>
+
 <script>
-function loginUser(){
-const email=document.getElementById('email').value.trim();
-const password=document.getElementById('password').value;
-if(email && password==='5432190'){
-document.getElementById('login').classList.add('hidden');
-document.getElementById('home').classList.remove('hidden');
-document.getElementById('error').textContent='';
-}else{
-document.getElementById('error').textContent='Incorrect password or missing email.';
+/* SETTINGS: Change these two values before publishing. */
+const SITE_PASSWORD = "5432190";
+const SUPPORT_EMAIL = "YOUR_SUPPORT_EMAIL@gmail.com";
+
+/* Package details */
+const packages = [
+  {name:"PACKAGE 1", pay:"15,000", value:"60,000"},
+  {name:"PACKAGE 2", pay:"20,000", value:"10,000"},
+  {name:"PACKAGE 3", pay:"30,000", value:"150,000"}
+];
+
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("supportAddress").textContent = SUPPORT_EMAIL;
+
+function showPage(id){
+  ["loginPage","homePage","qrPage","supportPage"].forEach(page=>{
+    document.getElementById(page).classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+  document.getElementById("bottomNav").classList.toggle("hidden", id==="loginPage");
+  document.getElementById("homeNav").classList.toggle("active", id==="homePage");
+  window.scrollTo(0,0);
 }
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  if(email && password===SITE_PASSWORD){
+    document.getElementById("loginError").textContent="";
+    showPage("homePage");
+  }else{
+    document.getElementById("loginError").textContent="Password galat hai. Dobara try karein.";
+  }
+});
+
+function openPackage(index){
+  const item=packages[index];
+  document.getElementById("qrPackageName").textContent=item.name;
+  document.getElementById("qrPay").textContent=item.pay;
+  document.getElementById("qrValue").textContent=item.value;
+  showPage("qrPage");
 }
-function selectPackage(input,output){
-document.getElementById('home').classList.add('hidden');
-document.getElementById('qrpage').classList.remove('hidden');
-document.getElementById('packageDetails').textContent=
-'Package: '+input+' → '+output;
+
+function sendSupportEmail(){
+  if(SUPPORT_EMAIL.includes("YOUR_SUPPORT_EMAIL")){
+    alert("Pehle code mein apna asli support Gmail set karein.");
+    return;
+  }
+  window.location.href="mailto:"+SUPPORT_EMAIL+
+    "?subject="+encodeURIComponent("AstralLink Gaming Support");
 }
-function backHome(){
-document.getElementById('qrpage').classList.add('hidden');
-document.getElementById('home').classList.remove('hidden');
-}
-function logoutUser(){
-document.getElementById('home').classList.add('hidden');
-document.getElementById('login').classList.remove('hidden');
-document.getElementById('password').value='';
+
+function logout(){
+  document.getElementById("password").value="";
+  showPage("loginPage");
 }
 </script>
 </body>
-</html>
+      </html>
+      
