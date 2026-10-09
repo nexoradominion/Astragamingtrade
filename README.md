@@ -1,2 +1,0 @@
-# Astragamingtrade
-AstralLink Gaming Zone
