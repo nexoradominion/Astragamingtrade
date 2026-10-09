@@ -6,89 +6,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AstralLink Gaming Zone</title>
 <style>
-:root {
-  --gold:#ffd447;
-  --gold2:#fff0a0;
-  --bg:#050505;
-  --panel:#121212;
-  --line:#765e20;
-  --muted:#bdbdbd;
-}
+:root{--gold:#ffd447;--bg:#050505;--panel:#121212;--line:#765e20}
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:white;
-  font-family:Arial,sans-serif;padding-bottom:85px
-}
-header{
-  text-align:center;padding:25px 12px;
-  border-bottom:1px solid var(--line);
-  background:linear-gradient(120deg,#080808,#211805,#080808)
-}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif;padding-bottom:85px}
+header{text-align:center;padding:25px 12px;border-bottom:1px solid var(--line);background:linear-gradient(120deg,#080808,#211805,#080808)}
 .logo{font-size:29px;font-weight:900;color:var(--gold)}
 .tag{margin-top:7px;letter-spacing:4px;font-size:12px;color:#eee}
 main{max-width:650px;margin:auto;padding:22px 16px}
 h2{color:var(--gold);font-size:25px}
 p{line-height:1.6}
-.panel,.package{
-  background:linear-gradient(145deg,#181818,#0d0d0d);
-  border:1px solid var(--line);border-radius:19px;
-  padding:22px;margin:18px 0;
-  box-shadow:0 8px 25px #000
-}
-input{
-  width:100%;padding:15px;margin:8px 0 16px;
-  background:#080808;color:white;border:1px solid #65521f;
-  border-radius:10px;font-size:16px
-}
-button{
-  border:0;border-radius:11px;padding:15px;
-  background:linear-gradient(100deg,#ffcc28,#fff0a0);
-  color:#171000;font-weight:bold;font-size:16px;
-  width:100%;cursor:pointer
-}
-button:active{transform:scale(.99)}
-.secondary{
-  background:#191919;color:var(--gold);
-  border:1px solid var(--line);margin-top:10px
-}
+.panel,.package{background:linear-gradient(145deg,#181818,#0b0b0b);border:1px solid var(--line);border-radius:19px;padding:22px;margin:18px 0;box-shadow:0 8px 25px #000}
+input,textarea{width:100%;padding:15px;margin:8px 0 16px;background:#080808;color:white;border:1px solid #65521f;border-radius:10px;font-size:16px}
+textarea{min-height:110px}
+button{border:0;border-radius:11px;padding:15px;background:linear-gradient(100deg,#ffcc28,#fff0a0);color:#171000;font-weight:bold;font-size:16px;width:100%;cursor:pointer}
+.secondary{background:#191919;color:var(--gold);border:1px solid var(--line);margin-top:10px}
 .hidden{display:none!important}
-.small{font-size:13px;color:var(--muted)}
-.banner{
-  padding:25px 18px;border-radius:17px;
-  background:radial-gradient(circle at top right,#60450d,#111 65%);
-  border:1px solid var(--line);margin:20px 0
-}
+.small{font-size:13px;color:#bdbdbd}
+.banner{padding:25px 18px;border-radius:17px;background:radial-gradient(circle at top right,#60450d,#111 65%);border:1px solid var(--line);margin:20px 0}
 .banner strong{color:var(--gold);font-size:25px}
-.pkghead{display:flex;justify-content:space-between;gap:8px}
+.pkghead{display:flex;justify-content:space-between;gap:8px;align-items:center}
 .pkghead h3{color:var(--gold);margin:0}
-.pill{border:1px solid var(--gold);color:var(--gold);
-  border-radius:25px;padding:7px 12px;font-size:12px}
-.amounts{display:flex;align-items:center;justify-content:space-between;
-  gap:8px;margin:25px 0}
-.amounts small{display:block;color:var(--muted);margin-bottom:8px}
+.pill{border:1px solid var(--gold);color:var(--gold);border-radius:25px;padding:7px 12px;font-size:12px}
+.amounts{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:25px 0}
+.amounts small{display:block;color:#bdbdbd;margin-bottom:8px}
 .amounts strong{font-size:25px}
 .value{color:var(--gold);text-align:right}
 .arrow{color:var(--gold);font-size:24px}
-.qrbox{
-  margin:20px auto;padding:14px;background:white;
-  border-radius:12px;max-width:290px;min-height:160px;
-  display:flex;align-items:center;justify-content:center
-}
-.qrbox img{display:block;width:100%;max-width:260px;height:auto}
-.notice{border:1px solid var(--line);padding:14px;
-  border-radius:12px;color:#e6d69d;font-size:13px;line-height:1.6}
-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  display:flex;justify-content:space-around;
-  background:#101010f5;border-top:1px solid var(--line);
-  padding:10px 3px calc(10px + env(safe-area-inset-bottom));
-  z-index:5
-}
-nav button{width:auto;flex:1;background:none;color:#bbb;
-  padding:8px 2px;font-size:12px}
+.qrbox{margin:20px auto;padding:12px;background:white;border-radius:12px;max-width:290px;min-height:160px;display:flex;align-items:center;justify-content:center}
+.qrbox img{width:100%;max-width:260px;height:auto;display:block}
+.qrplaceholder{color:#222;text-align:center}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#101010f5;border-top:1px solid var(--line);padding:10px 3px;z-index:5}
+nav button{width:auto;flex:1;background:none;color:#bbb;padding:8px 2px;font-size:12px}
 nav button span{display:block;font-size:20px;margin-bottom:5px}
 nav button.active{color:var(--gold)}
-footer{text-align:center;color:#888;font-size:12px;padding:20px}
 </style>
 </head>
 <body>
@@ -98,104 +48,89 @@ footer{text-align:center;color:#888;font-size:12px;padding:20px}
   <div class="tag">GAMING ZONE</div>
 </header>
 
-<!-- LOGIN -->
 <section id="login" class="page">
-  <main>
-    <div class="banner">
-      <strong>ENTER THE ZONE</strong>
-      <p>Gaming rewards. Trending codes. One destination.</p>
-    </div>
-    <div class="panel">
-      <h2>Welcome Back</h2>
-      <p class="small">Sign in to explore the demonstration website.</p>
-      <form onsubmit="loginUser(event)">
-        <label for="email">Email / Gmail</label>
-        <input id="email" type="email" placeholder="Enter your email" required>
-        <label for="password">Password</label>
-        <input id="password" type="password" placeholder="Enter password" required>
-        <button type="submit">LOGIN &nbsp; →</button>
-        <p id="loginError" class="small"></p>
-      </form>
-    </div>
-    <p class="small" style="text-align:center">College demonstration interface</p>
-  </main>
+<main>
+  <div class="banner">
+    <strong>ENTER THE ZONE</strong>
+    <p>PLAY · TOP UP · LEVEL UP</p>
+  </div>
+  <div class="panel">
+    <h2>Welcome Back</h2>
+    <p class="small">Sign in to continue.</p>
+    <form onsubmit="loginUser(event)">
+      <label>Email / Gmail</label>
+      <input id="email" type="email" placeholder="Enter your email" required>
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Enter password" required>
+      <button type="submit">LOGIN →</button>
+      <p id="loginError" class="small"></p>
+    </form>
+  </div>
+</main>
 </section>
 
-<!-- HOME -->
 <section id="home" class="page hidden">
-  <main>
-    <div class="banner">
-      <div class="small">WELCOME TO ASTRALLINK</div>
-      <strong>TRENDING CODES</strong>
-      <p>PLAY · TOP UP · LEVEL UP</p>
-    </div>
-    <h2>Available Packages</h2>
-    <p class="small">Choose a package to view its details.</p>
-    <div id="homePackages"></div>
-    <div class="notice">
-      DEMONSTRATION ONLY. Package figures are fictional examples
-      for a college scam-awareness presentation. No real payment
-      or payout is processed by this website.
-    </div>
-  </main>
+<main>
+  <div class="banner">
+    <div class="small">WELCOME TO ASTRALLINK</div>
+    <strong>TRENDING CODES</strong>
+    <p>PLAY · TOP UP · LEVEL UP</p>
+  </div>
+  <h2>Available Packages</h2>
+  <p>Choose your package.</p>
+  <div id="homePackages"></div>
+</main>
 </section>
 
-<!-- PACKAGES -->
 <section id="packages" class="page hidden">
-  <main>
-    <h2>All Packages</h2>
-    <p>Explore the sample package cards below.</p>
-    <div id="allPackages"></div>
-  </main>
+<main>
+  <h2>All Packages</h2>
+  <div id="allPackages"></div>
+</main>
 </section>
 
-<!-- QR PAGE -->
 <section id="qrpage" class="page hidden">
-  <main>
-    <div class="panel">
-      <div class="small">ASTRALLINK / PACKAGE DETAILS</div>
-      <h2 id="qrTitle">Selected Package</h2>
-      <div class="amounts">
-        <div><small>PAY AMOUNT</small><strong id="qrPay"></strong></div>
-        <div class="arrow">→</div>
-        <div class="value"><small>PACKAGE VALUE</small><strong id="qrValue"></strong></div>
-      </div>
-      <p>Running Time: <strong>7 Days</strong></p>
-      <h2 style="text-align:center">SCAN & PAY</h2>
-      <div class="qrbox">
-        <img id="qrImage" src="my-qr.png" alt="Replace with your demonstration QR image"
-             onerror="this.style.display='none';document.getElementById('qrMissing').style.display='block'">
-        <div id="qrMissing" style="display:none;color:#222;text-align:center">
-          QR IMAGE<br><br>
-          Upload your image as <b>my-qr.png</b>
-        </div>
-      </div>
-      <p class="small" style="text-align:center">
-        Sample QR display for the college demonstration.
-      </p>
-      <div class="notice">
-        This is a visual demonstration only. No payment is requested,
-        received, or verified here.
-      </div>
-      <button class="secondary" onclick="showPage('home')">← BACK TO HOME</button>
+<main>
+  <div class="panel">
+    <h2 id="qrTitle">Selected Package</h2>
+    <div class="amounts">
+      <div><small>PAY AMOUNT</small><strong id="qrPay"></strong></div>
+      <div class="arrow">→</div>
+      <div class="value"><small>PACKAGE VALUE</small><strong id="qrValue"></strong></div>
     </div>
-  </main>
+    <p>Running Time: <strong>7 Days</strong></p>
+    <h2 style="text-align:center">SCAN QR</h2>
+    <div class="qrbox">
+      <img id="qrImage" src="my-qr.png" alt="Your QR code"
+      onerror="this.style.display='none';document.getElementById('qrMissing').style.display='block'">
+      <div id="qrMissing" class="qrplaceholder" style="display:none">
+        <strong>QR IMAGE NOT UPLOADED</strong>
+        <p>Upload your QR image as my-qr.png</p>
+      </div>
+    </div>
+    <button class="secondary" onclick="showPage('home')">← BACK TO HOME</button>
+  </div>
+</main>
 </section>
 
-<!-- SUPPORT -->
 <section id="support" class="page hidden">
-  <main>
-    <div class="panel">
-      <h2>Support Center</h2>
-      <p>Need help with the demonstration website?</p>
-      <label for="supportEmail">Your Email</label>
-      <input id="supportEmail" type="email" placeholder="Enter your email">
-      <label for="supportMessage">Message</label>
-      <input id="supportMessage" type="text" placeholder="Type your message">
-      <button onclick="sendSupport()">SEND EMAIL</button>
-      <p class="small">Replace the example support email in the code with your own.</p>
+<main>
+  <div class="panel">
+    <h2>Support Center</h2>
+    <p>We are here to help you.</p>
+    <div class="banner">
+      <div class="small">SUPPORT EMAIL</div>
+      <strong style="font-size:17px;overflow-wrap:anywhere">astragamingtrade@gmail.com</strong>
     </div>
-  </main>
+    <form onsubmit="sendSupport(event)">
+      <label>Your Email</label>
+      <input id="supportEmail" type="email" placeholder="Enter your email" required>
+      <label>Message</label>
+      <textarea id="supportMessage" placeholder="Write your message" required></textarea>
+      <button type="submit">SEND EMAIL ✉</button>
+    </form>
+  </div>
+</main>
 </section>
 
 <nav id="nav" class="hidden">
@@ -205,91 +140,73 @@ footer{text-align:center;color:#888;font-size:12px;padding:20px}
   <button onclick="logout()"><span>↪</span>Logout</button>
 </nav>
 
-<footer>AstralLink Gaming Zone · College Awareness Demo</footer>
-
 <script>
-const DEMO_PASSWORD = "5432190";
+const DEMO_PASSWORD="5432190";
 
-/* Change these package details here if needed. */
-const packages = [
-  {name:"PACKAGE 1",pay:"15,000",value:"60,000"},
-  {name:"PACKAGE 2",pay:"20,000",value:"100,000"},
-  {name:"PACKAGE 3",pay:"30,000",value:"150,000"}
+const packages=[
+ {name:"PACKAGE 1",pay:"15,000",value:"60,000"},
+ {name:"PACKAGE 2",pay:"20,000",value:"100,000"},
+ {name:"PACKAGE 3",pay:"30,000",value:"150,000"}
 ];
 
 function packageCard(p,i){
-  return `
-  <div class="package">
-    <div class="pkghead">
-      <h3>♛ ${p.name}</h3><span class="pill">7 DAYS</span>
-    </div>
-    <div class="amounts">
-      <div><small>PAY AMOUNT</small><strong>${p.pay}</strong></div>
-      <div class="arrow">→</div>
-      <div class="value"><small>PACKAGE VALUE</small><strong>${p.value}</strong></div>
-    </div>
-    <p class="small">Package details · Running time: 7 days</p>
-    <button onclick="selectPackage(${i})">VIEW PACKAGE →</button>
-  </div>`;
+ return `<div class="package">
+ <div class="pkghead"><h3>♛ ${p.name}</h3><span class="pill">7 DAYS</span></div>
+ <div class="amounts">
+ <div><small>PAY AMOUNT</small><strong>${p.pay}</strong></div>
+ <div class="arrow">→</div>
+ <div class="value"><small>PACKAGE VALUE</small><strong>${p.value}</strong></div>
+ </div>
+ <p class="small">Package details · Running time: 7 days</p>
+ <button onclick="selectPackage(${i})">VIEW PACKAGE →</button>
+ </div>`;
 }
 
-document.getElementById("homePackages").innerHTML =
-  packages.map(packageCard).join("");
-document.getElementById("allPackages").innerHTML =
-  packages.map(packageCard).join("");
+document.getElementById("homePackages").innerHTML=packages.map(packageCard).join("");
+document.getElementById("allPackages").innerHTML=packages.map(packageCard).join("");
 
-function loginUser(event){
-  event.preventDefault();
-  const password=document.getElementById("password").value;
-  if(password !== DEMO_PASSWORD){
-    document.getElementById("loginError").textContent="Incorrect password.";
-    return;
-  }
-  showPage("home");
-  document.getElementById("nav").classList.remove("hidden");
+function loginUser(e){
+ e.preventDefault();
+ if(document.getElementById("password").value!==DEMO_PASSWORD){
+  document.getElementById("loginError").textContent="Incorrect password.";
+  return;
+ }
+ document.getElementById("nav").classList.remove("hidden");
+ showPage("home");
 }
 
 function showPage(id,button){
-  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  if(button){
-    document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-    button.classList.add("active");
-  } else if(id==="home"){
-    document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-    document.querySelector("nav button").classList.add("active");
-  }
-  window.scrollTo(0,0);
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(button) button.classList.add("active");
+ else if(id==="home") document.querySelector("nav button").classList.add("active");
+ window.scrollTo(0,0);
 }
 
 function selectPackage(i){
-  const p=packages[i];
-  document.getElementById("qrTitle").textContent=p.name;
-  document.getElementById("qrPay").textContent=p.pay;
-  document.getElementById("qrValue").textContent=p.value;
-  showPage("qrpage");
+ const p=packages[i];
+ document.getElementById("qrTitle").textContent=p.name;
+ document.getElementById("qrPay").textContent=p.pay;
+ document.getElementById("qrValue").textContent=p.value;
+ showPage("qrpage");
 }
 
 function logout(){
-  document.getElementById("password").value="";
-  document.getElementById("nav").classList.add("hidden");
-  showPage("login");
+ document.getElementById("password").value="";
+ document.getElementById("nav").classList.add("hidden");
+ showPage("login");
 }
 
-function sendSupport(){
-  const email=document.getElementById("supportEmail").value.trim();
-  const message=document.getElementById("supportMessage").value.trim();
-  if(!email || !message){
-    alert("Please enter your email and message.");
-    return;
-  }
-  /* Replace this example address with your own support email. */
-  const supportAddress="YOUR_SUPPORT_EMAIL@example.com";
-  window.location.href="mailto:"+supportAddress+
-    "?subject="+encodeURIComponent("AstralLink Demo Support")+
-    "&body="+encodeURIComponent("From: "+email+"\n\n"+message);
+function sendSupport(e){
+ e.preventDefault();
+ const email=document.getElementById("supportEmail").value.trim();
+ const message=document.getElementById("supportMessage").value.trim();
+ window.location.href="mailto:astragamingtrade@gmail.com?subject="+
+ encodeURIComponent("AstralLink Support")+"&body="+
+ encodeURIComponent("From: "+email+"\n\n"+message);
 }
 </script>
 </body>
-  </html>
-  
+      </html>
+      
