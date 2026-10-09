@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstralLink Gaming Zone</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #090909;
+      color: #f5d77b;
+    }
+    header {
+      text-align: center;
+      padding: 28px 12px;
+      border-bottom: 1px solid #8b6b24;
+    }
+    h1 { margin: 0; font-size: 27px; }
+    header p { color: #ddd; }
+    main {
+      max-width: 420px;
+      margin: 35px auto;
+      padding: 22px;
+    }
+    .panel {
+      border: 1px solid #b89438;
+      border-radius: 14px;
+      padding: 24px;
+      background: #141414;
+    }
+    label { display: block; margin: 15px 0 7px; }
+    input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 7px;
+      border: 1px solid #8b6b24;
+      background: #090909;
+      color: white;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 13px;
+      border: 0;
+      border-radius: 7px;
+      background: #e5bd57;
+      color: #111;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    #message { color: #ff9999; }
+    footer { text-align: center; color: #aaa; padding: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ASTRALLINK</h1>
+    <p>GAMING ZONE</p>
+  </header>
+
+  <main>
+    <div class="panel">
+      <h2>Welcome Back</h2>
+      <p>Login to continue</p>
+
+      <form id="loginForm">
+        <label for="email">Email / Gmail</label>
+        <input id="email" type="email" required
+          placeholder="Enter your email">
+
+        <label for="password">Password</label>
+        <input id="password" type="password" required
+          placeholder="Enter password">
+
+        <button type="submit">LOGIN</button>
+        <p id="message"></p>
+      </form>
+    </div>
+  </main>
+
+  <footer>AstralLink Gaming Zone</footer>
+
+  <script>
+    // Demo login only; this is not secure authentication.
+    const demoPassword = "CHANGE-THIS-PASSWORD";
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const password = document.getElementById("password").value;
+
+      if (password === demoPassword) {
+        document.getElementById("message").textContent =
+          "Login demo successful! Home page will be added next.";
+        document.getElementById("message").style.color = "#f5d77b";
+      } else {
+        document.getElementById("message").textContent =
+          "Incorrect password. Please try again.";
+      }
+    });
+  </script>
+</body>
+  </html>
