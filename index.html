@@ -1,104 +1,119 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AstralLink Gaming Zone</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #090909;
-      color: #f5d77b;
-    }
-    header {
-      text-align: center;
-      padding: 28px 12px;
-      border-bottom: 1px solid #8b6b24;
-    }
-    h1 { margin: 0; font-size: 27px; }
-    header p { color: #ddd; }
-    main {
-      max-width: 420px;
-      margin: 35px auto;
-      padding: 22px;
-    }
-    .panel {
-      border: 1px solid #b89438;
-      border-radius: 14px;
-      padding: 24px;
-      background: #141414;
-    }
-    label { display: block; margin: 15px 0 7px; }
-    input {
-      width: 100%;
-      padding: 13px;
-      border-radius: 7px;
-      border: 1px solid #8b6b24;
-      background: #090909;
-      color: white;
-    }
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 13px;
-      border: 0;
-      border-radius: 7px;
-      background: #e5bd57;
-      color: #111;
-      font-weight: bold;
-      font-size: 16px;
-    }
-    #message { color: #ff9999; }
-    footer { text-align: center; color: #aaa; padding: 20px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstralLink Gaming Zone</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:#f5d77b;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 10px;border-bottom:1px solid #8b6b24}
+header h1{margin:0;font-size:28px}
+header p{color:#ddd}
+main{max-width:460px;margin:30px auto;padding:15px}
+.card{background:#141414;border:1px solid #8b6b24;border-radius:20px;padding:25px;margin:20px 0}
+h2{color:#f5d77b}
+input{width:100%;padding:15px;margin:8px 0 18px;background:#080808;border:1px solid #8b6b24;border-radius:10px;color:white;font-size:16px}
+button{width:100%;padding:15px;background:#e9c253;color:#080808;border:0;border-radius:10px;font-size:17px;font-weight:bold;margin-top:10px}
+.small{color:#bbb;text-align:center}
+.package{border:1px solid #8b6b24;border-radius:14px;padding:18px;margin:15px 0;background:#111}
+.price{font-size:25px;font-weight:bold}
+.hidden{display:none}
+a{color:#f5d77b}
+</style>
 </head>
 <body>
-  <header>
-    <h1>ASTRALLINK</h1>
-    <p>GAMING ZONE</p>
-  </header>
 
-  <main>
-    <div class="panel">
-      <h2>Welcome Back</h2>
-      <p>Login to continue</p>
+<header>
+<h1>ASTRALLINK</h1>
+<p>GAMING ZONE</p>
+</header>
 
-      <form id="loginForm">
-        <label for="email">Email / Gmail</label>
-        <input id="email" type="email" required
-          placeholder="Enter your email">
+<main>
+<section id="login" class="card">
+<h2>Welcome Back</h2>
+<p>Login to continue</p>
+<label>Email / Gmail</label>
+<input id="email" type="email" placeholder="Enter your email">
+<label>Password</label>
+<input id="password" type="password" placeholder="Enter password">
+<button onclick="loginUser()">LOGIN</button>
+<p id="error" style="color:#ff7777"></p>
+</section>
 
-        <label for="password">Password</label>
-        <input id="password" type="password" required
-          placeholder="Enter password">
+<section id="home" class="hidden">
+<div class="card">
+<h2>🎮 TRENDING CODES</h2>
+<p>Welcome to AstralLink Gaming Zone</p>
+<p class="small">Choose your package · 7 Days</p>
+</div>
 
-        <button type="submit">LOGIN</button>
-        <p id="message"></p>
-      </form>
-    </div>
-  </main>
+<div class="package">
+<h2>Package 1</h2>
+<p class="price">15,000 → 60,000</p>
+<p>Running Time: 7 Days</p>
+<button onclick="selectPackage('15,000','60,000')">SELECT PACKAGE</button>
+</div>
 
-  <footer>AstralLink Gaming Zone</footer>
+<div class="package">
+<h2>Package 2</h2>
+<p class="price">20,000 → 10,000</p>
+<p>Running Time: 7 Days</p>
+<button onclick="selectPackage('20,000','10,000')">SELECT PACKAGE</button>
+</div>
 
-  <script>
-    // Demo login only; this is not secure authentication.
-    const demoPassword = "CHANGE-THIS-PASSWORD";
+<div class="package">
+<h2>Package 3</h2>
+<p class="price">30,000 → 150,000</p>
+<p>Running Time: 7 Days</p>
+<button onclick="selectPackage('30,000','150,000')">SELECT PACKAGE</button>
+</div>
 
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const password = document.getElementById("password").value;
+<div class="card">
+<h2>Support</h2>
+<p>Need help? Contact our support team.</p>
+<p id="supportEmail">Support Gmail: Add your Gmail address</p>
+</div>
+<button onclick="logoutUser()">LOG OUT</button>
+</section>
 
-      if (password === demoPassword) {
-        document.getElementById("message").textContent =
-          "Login demo successful! Home page will be added next.";
-        document.getElementById("message").style.color = "#f5d77b";
-      } else {
-        document.getElementById("message").textContent =
-          "Incorrect password. Please try again.";
-      }
-    });
-  </script>
+<section id="qrpage" class="card hidden">
+<h2>Selected Package</h2>
+<p id="packageDetails"></p>
+<p>Running Time: 7 Days</p>
+<p class="small">QR payment setup abhi add nahi hua hai.</p>
+<button onclick="backHome()">BACK TO HOME</button>
+</section>
+</main>
+
+<script>
+function loginUser(){
+const email=document.getElementById('email').value.trim();
+const password=document.getElementById('password').value;
+if(email && password==='5432190'){
+document.getElementById('login').classList.add('hidden');
+document.getElementById('home').classList.remove('hidden');
+document.getElementById('error').textContent='';
+}else{
+document.getElementById('error').textContent='Incorrect password or missing email.';
+}
+}
+function selectPackage(input,output){
+document.getElementById('home').classList.add('hidden');
+document.getElementById('qrpage').classList.remove('hidden');
+document.getElementById('packageDetails').textContent=
+'Package: '+input+' → '+output;
+}
+function backHome(){
+document.getElementById('qrpage').classList.add('hidden');
+document.getElementById('home').classList.remove('hidden');
+}
+function logoutUser(){
+document.getElementById('home').classList.add('hidden');
+document.getElementById('login').classList.remove('hidden');
+document.getElementById('password').value='';
+}
+</script>
 </body>
-  </html>
+</html>
