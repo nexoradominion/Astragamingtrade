@@ -21,7 +21,7 @@
 <section id="support" class="panel hidden"><h1>SUPPORT</h1><p>Email: <a style="color:var(--g)" href="mailto:astragamingtrade@gmail.com">astragamingtrade@gmail.com</a></p></section></main>
 <footer><button data-p="home" onclick="show('home')"><span>⌂</span>Home</button><button data-p="packages" onclick="show('packages')"><span>♛</span>Packages</button><button data-p="account" onclick="show('account')"><span>♙</span>Account</button><button data-p="support" onclick="show('support')"><span>✉</span>Support</button><button onclick="logout()"><span>↪</span>Logout</button></footer>
 <script>
-const PASSWORD='5432190';
+const PASSWORD='754219';
 const packageInfo={1:{amount:2500,value:6000,days:3},2:{amount:5000,value:30000,days:10},3:{amount:10000,value:50000,days:15},4:{amount:15000,value:75000,days:7},5:{amount:20000,value:100000,days:7},6:{amount:30000,value:150000,days:7},7:{amount:50000,value:300000,days:7}};
 let walletBalance=6000, activeItems=[], expiredItems=[{id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3,start:0,end:0}], pendingPackage=null, tickHandle=null;
 function login(){if(document.getElementById('pass').value!==PASSWORD){document.getElementById('err').textContent='Incorrect password';return}show('home')}
