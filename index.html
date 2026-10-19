@@ -32,7 +32,7 @@
 <footer class="hidden"><button data-p="home" onclick="show('home')"><span>⌂</span>Home</button><button data-p="packages" onclick="show('packages')"><span>♛</span>Packages</button><button data-p="account" onclick="show('account')"><span>♙</span>Account</button><button data-p="support" onclick="show('support')"><span>✉</span>Support</button><button onclick="logout()"><span>↪</span>Logout</button></footer>
 <script>
 const PASSWORD='5432190';
-let packageWalletBalance=0, withdrawalWalletBalance=6000, selectedPackage=null;
+let packageWalletBalance=800, withdrawalWalletBalance=6000, selectedPackage=null;
 const packageData={1:{cost:800,value:4000,hours:24},2:{cost:5000,value:30000,days:10},3:{cost:10000,value:50000,days:15},4:{cost:15000,value:75000,days:7},5:{cost:30000,value:150000,days:7},6:{cost:50000,value:300000,days:7}};
 function login(){const email=document.getElementById('email').value.trim();const pass=document.getElementById('pass').value;if(!email||!document.getElementById('email').checkValidity()){document.getElementById('err').textContent='Please enter a valid email address';return}if(pass!==PASSWORD){document.getElementById('err').textContent='Incorrect password';return}document.getElementById('err').textContent='';show('home')}
 function show(id){const loggedIn=id!=='login';['login','home','packages','expiredPackages','qrpage','account','support','buyPage'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));document.querySelector('footer').classList.toggle('hidden',!loggedIn);document.querySelectorAll('footer [data-p]').forEach(b=>b.classList.toggle('active',b.dataset.p===id));window.scrollTo(0,0)}
