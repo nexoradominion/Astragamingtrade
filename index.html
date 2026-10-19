@@ -39,6 +39,7 @@ input:focus{outline:1px solid var(--g)}
 .expiredTag{color:var(--red);font-weight:800}
 .packageRecord{border:1px solid var(--line);border-radius:14px;padding:15px;margin:12px 0;background:#101010}
 .recordTime{font-size:13px;color:#ddd;margin-top:8px}
+.notice{border:1px solid var(--g);padding:12px;border-radius:10px;color:var(--g);font-size:13px;line-height:1.5}
 body.logged-out footer{display:none!important}
 footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#111;border-top:1px solid var(--line);padding:8px 2px calc(8px + env(safe-area-inset-bottom));z-index:3}
 footer button{border:0;background:none;color:#bbb;font-weight:bold;font-size:12px;padding:4px;cursor:pointer}
@@ -55,24 +56,63 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <div class="field"><label for="pass">Password</label><input id="pass" type="password" placeholder="Enter password" autocomplete="current-password"></div>
 <button class="btn" onclick="login()">LOGIN</button><p id="err" class="muted" role="status"></p>
 </section>
-<section id="home" class="panel hidden"><h1>HOME</h1><p>Welcome to AstralLink Gaming Zone.</p><button class="btn" onclick="show('packages')">VIEW PACKAGES</button></section>
+
+<section id="home" class="panel hidden">
+<h1>HOME</h1><p>Welcome to AstralLink Gaming Zone.</p>
+<button class="btn" onclick="show('packages')">VIEW PACKAGES</button>
+</section>
+
 <section id="packages" class="hidden">
-<div class="panel"><h1>PACKAGES</h1><p class="muted">Package Value is for in-game use only. It is not cash and does not guarantee financial returns.</p><div class="grid"><button class="btn secondary" onclick="show('activePackages')">ACTIVE PACKAGES</button><button class="btn secondary" onclick="show('expiredPackages')">EXPIRED PACKAGES</button></div></div>
+<div class="panel">
+<h1>PACKAGES</h1>
+<p class="muted">Package Value is for in-game use only. It is not cash and does not guarantee financial returns.</p>
+<div class="grid">
+<button class="btn secondary" onclick="show('activePackages')">ACTIVE PACKAGES</button>
+<button class="btn secondary" onclick="show('expiredPackages')">EXPIRED PACKAGES</button>
+</div>
+</div>
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 1</h2><span class="pill">24 HOURS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹800</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹4,000</div></div></div><button class="btn" onclick="buyPackage(1)">BUY PACKAGE →</button></div>
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 2</h2><span class="pill">10 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹5,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹30,000</div></div></div><button class="btn" onclick="buyPackage(2)">BUY PACKAGE →</button></div>
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 3</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹10,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹50,000</div></div></div><button class="btn" onclick="buyPackage(3)">BUY PACKAGE →</button></div>
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 4</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹15,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹75,000</div></div></div><button class="btn" onclick="buyPackage(4)">BUY PACKAGE →</button></div>
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 5</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹20,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹100,000</div></div></div><button class="btn" onclick="buyPackage(5)">BUY PACKAGE →</button></div>
 </section>
+
 <section id="activePackages" class="panel hidden"><h1>ACTIVE PACKAGES</h1><div id="activeList"></div><button class="btn secondary" onclick="show('packages')">← BACK TO PACKAGES</button></section>
 <section id="expiredPackages" class="panel hidden"><h1>EXPIRED PACKAGES</h1><div id="expiredList"></div><button class="btn secondary" onclick="show('packages')">← BACK TO PACKAGES</button></section>
-<section id="qrpage" class="panel hidden"><h1>ADD MONEY</h1><div class="qr"><img src="IMG-20261009-WA0016.jpg" alt="QR code" onerror="this.style.display='none';document.getElementById('qrf').classList.remove('hidden')"><div id="qrf" class="hidden">QR image not available. Add IMG-20261009-WA0016.jpg to the repository root.</div></div><p class="muted">This page displays a QR image only. No payment is processed.</p><button class="btn" type="button" onclick="return false">ADD MONEY</button><button class="btn secondary" onclick="show('packages')">← BACK TO PACKAGES</button></section>
-<section id="account" class="hidden">
-<div class="panel"><h1>MY ACCOUNT</h1><div class="grid"><div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div></div><div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹6,000</div></div></div><p class="muted">Displayed demo balances only. No real payment or withdrawal is processed.</p></div>
-<div class="panel"><h1>BANK DETAILS</h1><form onsubmit="return saveBankDetails(event)"><div class="field"><label for="holder">Account Holder Name</label><input id="holder" placeholder="Enter account holder name" autocomplete="off" required></div><div class="field"><label for="bankName">Bank Name</label><input id="bankName" placeholder="Enter bank name" autocomplete="off" required></div><div class="field"><label for="bank">Account Number</label><input id="bank" inputmode="numeric" placeholder="Enter account number" autocomplete="off" required></div><div class="field"><label for="ifsc">IFSC Code</label><input id="ifsc" placeholder="Enter IFSC code" autocomplete="off" required></div><button class="btn" type="submit">SAVE</button><p class="muted hidden" id="msg" role="status">Your data is not stored.</p></form></div>
+
+<!-- QR is now opened from the Package Wallet -->
+<section id="qrpage" class="panel hidden">
+<h1>ADD MONEY</h1>
+<p class="muted">Scan the QR image if you choose to. This demo does not verify payments or automatically credit the wallet.</p>
+<div class="qr"><img src="IMG-20261009-WA0016.jpg" alt="QR code" onerror="this.style.display='none';document.getElementById('qrf').classList.remove('hidden')"><div id="qrf" class="hidden">QR image not available. Add IMG-20261009-WA0016.jpg to the repository root.</div></div>
+<button class="btn secondary" onclick="show('account')">← BACK TO ACCOUNT</button>
 </section>
+
+<section id="account" class="hidden">
+<div class="panel">
+<h1>MY ACCOUNT</h1>
+<div class="grid">
+<div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div><button class="btn" onclick="show('qrpage')">ADD MONEY</button></div>
+<div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹6,000</div></div>
+</div>
+<p class="muted">Demo balances only. No payment, deposit verification or withdrawal is processed.</p>
+</div>
+<div class="panel">
+<h1>BANK DETAILS</h1>
+<form onsubmit="return saveBankDetails(event)">
+<div class="field"><label for="holder">Account Holder Name</label><input id="holder" placeholder="Enter account holder name" autocomplete="off" required></div>
+<div class="field"><label for="bankName">Bank Name</label><input id="bankName" placeholder="Enter bank name" autocomplete="off" required></div>
+<div class="field"><label for="bank">Account Number</label><input id="bank" inputmode="numeric" placeholder="Enter account number" autocomplete="off" required></div>
+<div class="field"><label for="ifsc">IFSC Code</label><input id="ifsc" placeholder="Enter IFSC code" autocomplete="off" required></div>
+<button class="btn" type="submit">SAVE</button><p class="muted hidden" id="msg" role="status">Your data is not stored.</p>
+</form>
+</div>
+</section>
+
 <section id="support" class="panel hidden"><h1>SUPPORT</h1><p>Email: <a style="color:var(--g)" href="mailto:astragamingtrade@gmail.com">astragamingtrade@gmail.com</a></p></section>
 </main>
+
 <footer>
 <button data-p="home" onclick="show('home')"><span>⌂</span>Home</button>
 <button data-p="packages" onclick="show('packages')"><span>♛</span>Packages</button>
@@ -80,9 +120,10 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <button data-p="support" onclick="show('support')"><span>✉</span>Support</button>
 <button onclick="logout()"><span>↪</span>Logout</button>
 </footer>
+
 <script>
 const PASSWORD='5432190';
-const STORAGE_KEY='astralink_final_v4';
+const STORAGE_KEY='astralink_wallet_demo_v5';
 const packageInfo={
 1:{amount:800,value:4000,days:1},
 2:{amount:5000,value:30000,days:10},
@@ -105,18 +146,15 @@ if(raw){
 const saved=JSON.parse(raw);
 if(Array.isArray(saved.activeItems))activeItems=saved.activeItems;
 if(Array.isArray(saved.expiredItems))expiredItems=saved.expiredItems;
+if(Number.isFinite(saved.walletBalance))walletBalance=saved.walletBalance;
 if(Number.isFinite(saved.withdrawWalletBalance))withdrawWalletBalance=saved.withdrawWalletBalance;
 }
 }catch(e){}
-if(!activeItems.some(x=>Number(x.number)===1&&Number(x.amount)===800)){
-activeItems.unshift({...defaultActive[0]});
-}
-if(!expiredItems.some(x=>x.id==='initial-expired-2500')){
-expiredItems.unshift({...initialExpired[0]});
-}
+if(!activeItems.some(x=>Number(x.number)===1&&Number(x.amount)===800))activeItems.unshift({...defaultActive[0]});
+if(!expiredItems.some(x=>x.id==='initial-expired-2500'))expiredItems.unshift({...initialExpired[0]});
 }
 function saveState(){
-try{localStorage.setItem(STORAGE_KEY,JSON.stringify({activeItems,expiredItems,withdrawWalletBalance}));}catch(e){}
+try{localStorage.setItem(STORAGE_KEY,JSON.stringify({activeItems,expiredItems,walletBalance,withdrawWalletBalance}));}catch(e){}
 }
 loadState();
 
@@ -141,8 +179,18 @@ if(id==='activePackages'||id==='expiredPackages')renderPackages();
 if(id==='account')updateBalance();
 }
 function buyPackage(n){
-if(!loggedIn||!packageInfo[n])return;
-show('qrpage');
+if(!loggedIn)return;
+const p=packageInfo[n];
+if(!p)return;
+if(walletBalance<p.amount){
+alert('Package Wallet mein itna paisa nahi hai. Required: ₹'+p.amount.toLocaleString('en-IN')+'. Available: ₹'+walletBalance.toLocaleString('en-IN')+'.');
+return;
+}
+walletBalance-=p.amount;
+activeItems.push({id:'purchase-'+Date.now()+'-'+Math.random().toString(16).slice(2),number:n,amount:p.amount,value:p.value,days:p.days});
+updateBalance();
+renderPackages();
+show('activePackages');
 }
 function updateBalance(){
 document.getElementById('balance').textContent='₹'+walletBalance.toLocaleString('en-IN');
@@ -185,4 +233,4 @@ show('login');
 </script>
 </body>
   </html>
-  
+                                                                                                                        
