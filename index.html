@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -76,14 +77,19 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <button class="btn secondary" onclick="show('expiredPackages')">EXPIRED PACKAGES</button>
 </div>
 </div>
+
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 1</h2><span class="pill">24 HOURS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹800</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹4,000</div></div></div><button class="btn" onclick="buyPackage(1)">BUY PACKAGE →</button>
 <p class="muted hidden walletError" id="walletError1" role="status"></p></div>
+
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 2</h2><span class="pill">10 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹5,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹30,000</div></div></div><button class="btn" onclick="buyPackage(2)">BUY PACKAGE →</button>
 <p class="muted hidden walletError" id="walletError2" role="status"></p></div>
+
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 3</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹10,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹50,000</div></div></div><button class="btn" onclick="buyPackage(3)">BUY PACKAGE →</button>
 <p class="muted hidden walletError" id="walletError3" role="status"></p></div>
+
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 4</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹15,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹75,000</div></div></div><button class="btn" onclick="buyPackage(4)">BUY PACKAGE →</button>
 <p class="muted hidden walletError" id="walletError4" role="status"></p></div>
+
 <div class="pkg"><div class="top"><h2>♛ PACKAGE 5</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹20,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹100,000</div></div></div><button class="btn" onclick="buyPackage(5)">BUY PACKAGE →</button>
 <p class="muted hidden walletError" id="walletError5" role="status"></p></div>
 </section>
@@ -108,6 +114,7 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 </div>
 <p class="muted">Please ensure that your bank details are accurate and valid before submitting.</p>
 </div>
+
 <div class="panel">
 <h1>BANK DETAILS</h1>
 <form onsubmit="return saveBankDetails(event)">
@@ -133,6 +140,7 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <script>
 const PASSWORD='5432190';
 const STORAGE_KEY='astralink_wallet_demo_v5';
+
 const packageInfo={
 1:{amount:800,value:4000,days:1},
 2:{amount:5000,value:30000,days:10},
@@ -140,8 +148,15 @@ const packageInfo={
 4:{amount:15000,value:75000,days:7},
 5:{amount:20000,value:100000,days:7}
 };
-const initialExpired=[{id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3}];
-const defaultActive=[{id:'active-package-800',number:1,amount:800,value:4000,days:1}];
+
+const initialExpired=[
+{id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3}
+];
+
+const defaultActive=[
+{id:'active-package-800',number:1,amount:800,value:4000,days:1}
+];
+
 let loggedIn=false;
 let walletBalance=0;
 let withdrawWalletBalance=6000;
@@ -159,12 +174,27 @@ if(Number.isFinite(saved.walletBalance))walletBalance=saved.walletBalance;
 if(Number.isFinite(saved.withdrawWalletBalance))withdrawWalletBalance=saved.withdrawWalletBalance;
 }
 }catch(e){}
-if(!activeItems.some(x=>Number(x.number)===1&&Number(x.amount)===800))activeItems.unshift({...defaultActive[0]});
-if(!expiredItems.some(x=>x.id==='initial-expired-2500'))expiredItems.unshift({...initialExpired[0]});
+
+if(!activeItems.some(x=>Number(x.number)===1&&Number(x.amount)===800)){
+activeItems.unshift({...defaultActive[0]});
 }
+
+if(!expiredItems.some(x=>x.id==='initial-expired-2500')){
+expiredItems.unshift({...initialExpired[0]});
+}
+}
+
 function saveState(){
-try{localStorage.setItem(STORAGE_KEY,JSON.stringify({activeItems,expiredItems,walletBalance,withdrawWalletBalance}));}catch(e){}
+try{
+localStorage.setItem(STORAGE_KEY,JSON.stringify({
+activeItems,
+expiredItems,
+walletBalance,
+withdrawWalletBalance
+}));
+}catch(e){}
 }
+
 loadState();
 
 function login(){
@@ -176,41 +206,67 @@ loggedIn=true;
 document.getElementById('err').textContent='';
 show('home');
 }
+
 function show(id){
 const pages=['login','home','packages','qrpage','activePackages','expiredPackages','account','support'];
 if(!pages.includes(id))return;
 if(id!=='login'&&!loggedIn)id='login';
+
 document.body.classList.toggle('logged-out',!loggedIn);
-document.querySelectorAll('main > section').forEach(s=>s.classList.toggle('hidden',s.id!==id));
-document.querySelectorAll('footer [data-p]').forEach(b=>b.classList.toggle('active',b.dataset.p===id));
+document.querySelectorAll('main > section').forEach(s=>{
+s.classList.toggle('hidden',s.id!==id);
+});
+document.querySelectorAll('footer [data-p]').forEach(b=>{
+b.classList.toggle('active',b.dataset.p===id);
+});
+
 window.scrollTo(0,0);
+
 if(id==='activePackages'||id==='expiredPackages')renderPackages();
 if(id==='account')updateBalance();
 }
+
 function buyPackage(n){
 if(!loggedIn)return;
+
 const p=packageInfo[n];
 if(!p)return;
+
 if(walletBalance<p.amount){
 const message=document.getElementById('walletError'+n);
 if(message){
-message.textContent='Package Wallet balance kam hai. Required: ₹'+p.amount.toLocaleString('en-IN')+' · Available: ₹'+walletBalance.toLocaleString('en-IN')+'.';
+message.textContent='Insufficient Balance. Required: ₹'+p.amount.toLocaleString('en-IN')+' | Available: ₹'+walletBalance.toLocaleString('en-IN')+'. Please add funds to continue.';
 message.classList.remove('hidden');
 }
 return;
 }
-document.querySelectorAll('.walletError').forEach(el=>{el.textContent='';el.classList.add('hidden')});
+
+document.querySelectorAll('.walletError').forEach(el=>{
+el.textContent='';
+el.classList.add('hidden');
+});
+
 walletBalance-=p.amount;
-activeItems.push({id:'purchase-'+Date.now()+'-'+Math.random().toString(16).slice(2),number:n,amount:p.amount,value:p.value,days:p.days});
+
+activeItems.push({
+id:'purchase-'+Date.now()+'-'+Math.random().toString(16).slice(2),
+number:n,
+amount:p.amount,
+value:p.value,
+days:p.days
+});
+
 updateBalance();
 renderPackages();
 show('activePackages');
 }
+
 function updateBalance(){
 document.getElementById('balance').textContent='₹'+walletBalance.toLocaleString('en-IN');
 document.getElementById('withdrawBalance').textContent='₹'+withdrawWalletBalance.toLocaleString('en-IN');
 saveState();
 }
+
 function renderPackages(){
 document.getElementById('activeList').innerHTML=activeItems.length?activeItems.map(x=>`
 <div class="packageRecord">
@@ -221,19 +277,25 @@ document.getElementById('activeList').innerHTML=activeItems.length?activeItems.m
 <div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹${Number(x.value).toLocaleString('en-IN')}</div></div>
 </div>
 <div class="recordTime">Duration: ${Number(x.number)===1?'24 hours':x.days+' days'}</div>
-</div>`).join(''):'<p class="muted">No active packages yet.</p>';
+</div>
+`).join(''):'<p class="muted">No active packages yet.</p>';
+
 document.getElementById('expiredList').innerHTML=expiredItems.length?expiredItems.map(x=>`
 <div class="packageRecord">
 <div class="top"><b>PACKAGE ${x.number}</b><span class="expiredTag">● EXPIRED</span></div>
 <div class="recordTime">Pay amount: ₹${Number(x.amount).toLocaleString('en-IN')} · Package value: ₹${Number(x.value).toLocaleString('en-IN')} · Duration: ${x.days} days</div>
-</div>`).join(''):'<p class="muted">No expired packages yet.</p>';
+</div>
+`).join(''):'<p class="muted">No expired packages yet.</p>';
+
 saveState();
 }
+
 function saveBankDetails(e){
 e.preventDefault();
 document.getElementById('msg').classList.remove('hidden');
 return false;
 }
+
 function logout(){
 loggedIn=false;
 document.getElementById('pass').value='';
@@ -241,6 +303,7 @@ document.getElementById('email').value='';
 document.getElementById('err').textContent='';
 show('login');
 }
+
 updateBalance();
 renderPackages();
 show('login');
