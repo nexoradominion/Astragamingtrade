@@ -27,6 +27,7 @@ p{color:#ddd;line-height:1.5}
 .gold{color:var(--g)}
 .btn{width:100%;border:0;border-radius:12px;padding:15px;background:linear-gradient(100deg,#ffca23,#fff09a);font-weight:800;color:#090909;margin-top:13px;cursor:pointer}
 .secondary{background:#171717;color:var(--g);border:1px solid var(--line)}
+.addMoneySmall{display:inline-block;width:auto;min-width:0;padding:9px 13px;margin-top:10px;font-size:12px;letter-spacing:.3px;border-radius:9px;background:linear-gradient(110deg,#ffcf32,#ffe98b);box-shadow:0 3px 10px #ffd33d18}
 .field{margin:15px 0}
 label{display:block;margin-bottom:8px}
 input{width:100%;padding:14px;background:#101010;border:1px solid #777;border-radius:10px;color:#fff;font-size:16px}
@@ -71,11 +72,16 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <button class="btn secondary" onclick="show('expiredPackages')">EXPIRED PACKAGES</button>
 </div>
 </div>
-<div class="pkg"><div class="top"><h2>♛ PACKAGE 1</h2><span class="pill">24 HOURS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹800</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹4,000</div></div></div><button class="btn" onclick="buyPackage(1)">BUY PACKAGE →</button></div>
-<div class="pkg"><div class="top"><h2>♛ PACKAGE 2</h2><span class="pill">10 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹5,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹30,000</div></div></div><button class="btn" onclick="buyPackage(2)">BUY PACKAGE →</button></div>
-<div class="pkg"><div class="top"><h2>♛ PACKAGE 3</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹10,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹50,000</div></div></div><button class="btn" onclick="buyPackage(3)">BUY PACKAGE →</button></div>
-<div class="pkg"><div class="top"><h2>♛ PACKAGE 4</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹15,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹75,000</div></div></div><button class="btn" onclick="buyPackage(4)">BUY PACKAGE →</button></div>
-<div class="pkg"><div class="top"><h2>♛ PACKAGE 5</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹20,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹100,000</div></div></div><button class="btn" onclick="buyPackage(5)">BUY PACKAGE →</button></div>
+<div class="pkg"><div class="top"><h2>♛ PACKAGE 1</h2><span class="pill">24 HOURS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹800</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹4,000</div></div></div><button class="btn" onclick="buyPackage(1)">BUY PACKAGE →</button>
+<p class="muted hidden walletError" id="walletError1" role="status"></p></div>
+<div class="pkg"><div class="top"><h2>♛ PACKAGE 2</h2><span class="pill">10 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹5,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹30,000</div></div></div><button class="btn" onclick="buyPackage(2)">BUY PACKAGE →</button>
+<p class="muted hidden walletError" id="walletError2" role="status"></p></div>
+<div class="pkg"><div class="top"><h2>♛ PACKAGE 3</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹10,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹50,000</div></div></div><button class="btn" onclick="buyPackage(3)">BUY PACKAGE →</button>
+<p class="muted hidden walletError" id="walletError3" role="status"></p></div>
+<div class="pkg"><div class="top"><h2>♛ PACKAGE 4</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹15,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹75,000</div></div></div><button class="btn" onclick="buyPackage(4)">BUY PACKAGE →</button>
+<p class="muted hidden walletError" id="walletError4" role="status"></p></div>
+<div class="pkg"><div class="top"><h2>♛ PACKAGE 5</h2><span class="pill">7 DAYS</span></div><div class="amounts"><div><div class="muted">PAY AMOUNT</div><div class="amount">₹20,000</div></div><span class="gold">→</span><div class="center"><div class="muted">PACKAGE VALUE</div><div class="amount gold">₹100,000</div></div></div><button class="btn" onclick="buyPackage(5)">BUY PACKAGE →</button>
+<p class="muted hidden walletError" id="walletError5" role="status"></p></div>
 </section>
 
 <section id="activePackages" class="panel hidden"><h1>ACTIVE PACKAGES</h1><div id="activeList"></div><button class="btn secondary" onclick="show('packages')">← BACK TO PACKAGES</button></section>
@@ -93,7 +99,7 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <div class="panel">
 <h1>MY ACCOUNT</h1>
 <div class="grid">
-<div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div><button class="btn" onclick="show('qrpage')">ADD MONEY</button></div>
+<div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div><button class="btn addMoneySmall" onclick="show('qrpage')">＋ ADD MONEY</button></div>
 <div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹6,000</div></div>
 </div>
 <p class="muted">Demo balances only. No payment, deposit verification or withdrawal is processed.</p>
@@ -118,7 +124,6 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <button data-p="packages" onclick="show('packages')"><span>♛</span>Packages</button>
 <button data-p="account" onclick="show('account')"><span>♙</span>Account</button>
 <button data-p="support" onclick="show('support')"><span>✉</span>Support</button>
-<button onclick="logout()"><span>↪</span>Logout</button>
 </footer>
 
 <script>
@@ -183,9 +188,14 @@ if(!loggedIn)return;
 const p=packageInfo[n];
 if(!p)return;
 if(walletBalance<p.amount){
-alert('Package Wallet mein itna paisa nahi hai. Required: ₹'+p.amount.toLocaleString('en-IN')+'. Available: ₹'+walletBalance.toLocaleString('en-IN')+'.');
+const message=document.getElementById('walletError'+n);
+if(message){
+message.textContent='Package Wallet balance kam hai. Required: ₹'+p.amount.toLocaleString('en-IN')+' · Available: ₹'+walletBalance.toLocaleString('en-IN')+'.';
+message.classList.remove('hidden');
+}
 return;
 }
+document.querySelectorAll('.walletError').forEach(el=>{el.textContent='';el.classList.add('hidden')});
 walletBalance-=p.amount;
 activeItems.push({id:'purchase-'+Date.now()+'-'+Math.random().toString(16).slice(2),number:n,amount:p.amount,value:p.value,days:p.days});
 updateBalance();
@@ -232,5 +242,5 @@ renderPackages();
 show('login');
 </script>
 </body>
-  </html>
-                                                                                                                        
+                                                                                                                                                                                                                                                                                       </html>
+  
