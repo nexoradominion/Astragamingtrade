@@ -40,6 +40,10 @@ input:focus{outline:1px solid var(--g)}
 .expiredTag{color:var(--red);font-weight:800}
 .packageRecord{border:1px solid var(--line);border-radius:14px;padding:15px;margin:12px 0;background:#101010}
 .recordTime{font-size:13px;color:#ddd;margin-top:8px}
+.wallet-action{display:inline-flex;align-items:center;gap:7px;width:auto;margin-top:10px;padding:4px 0;border:0;background:transparent;color:var(--g);font-size:13px;font-weight:700;line-height:1.4;cursor:pointer}
+.wallet-action:focus-visible{outline:1px solid var(--g);outline-offset:4px;border-radius:4px}
+.wallet-action .wallet-icon{font-size:15px}
+.wallet-action .wallet-arrow{margin-left:3px;font-size:17px}
 .notice{border:1px solid var(--g);padding:12px;border-radius:10px;color:var(--g);font-size:13px;line-height:1.5}
 body.logged-out footer{display:none!important}
 footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#111;border-top:1px solid var(--line);padding:8px 2px calc(8px + env(safe-area-inset-bottom));z-index:3}
@@ -99,7 +103,7 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <div class="panel">
 <h1>MY ACCOUNT</h1>
 <div class="grid">
-<div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div><button class="btn addMoneySmall" onclick="show('qrpage')">＋ ADD MONEY</button></div>
+<div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div><button class="wallet-action" type="button" onclick="show('qrpage')"><span class="wallet-icon">▣</span><span>ADD MONEY</span><span class="wallet-arrow">›</span></button></div>
 <div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹6,000</div></div>
 </div>
 <p class="muted">Demo balances only. No payment, deposit verification or withdrawal is processed.</p>
@@ -242,5 +246,5 @@ renderPackages();
 show('login');
 </script>
 </body>
-                                                                                                                                                                                                                                                                                       </html>
+  </html>
   
