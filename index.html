@@ -97,7 +97,6 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <section id="activePackages" class="panel hidden"><h1>ACTIVE PACKAGES</h1><div id="activeList"></div><button class="btn secondary" onclick="show('packages')">← BACK TO PACKAGES</button></section>
 <section id="expiredPackages" class="panel hidden"><h1>EXPIRED PACKAGES</h1><div id="expiredList"></div><button class="btn secondary" onclick="show('packages')">← BACK TO PACKAGES</button></section>
 
-<!-- QR is now opened from the Package Wallet -->
 <section id="qrpage" class="panel hidden">
 <h1>ADD MONEY</h1>
 <p class="muted">Experiencing QR payment limit restrictions? Contact us via email for bank account details.</p>
@@ -150,17 +149,14 @@ const packageInfo={
 };
 
 const initialExpired=[
-{id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3}
-];
-
-const defaultActive=[
-{id:'active-package-800',number:1,amount:800,value:4000,days:1}
+{id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3},
+{id:'initial-expired-800',number:1,amount:800,value:4000,days:1}
 ];
 
 let loggedIn=false;
 let walletBalance=0;
 let withdrawWalletBalance=6000;
-let activeItems=defaultActive.map(x=>({...x}));
+let activeItems=[];
 let expiredItems=initialExpired.map(x=>({...x}));
 
 function loadState(){
@@ -168,20 +164,32 @@ try{
 const raw=localStorage.getItem(STORAGE_KEY);
 if(raw){
 const saved=JSON.parse(raw);
-if(Array.isArray(saved.activeItems))activeItems=saved.activeItems;
-if(Array.isArray(saved.expiredItems))expiredItems=saved.expiredItems;
-if(Number.isFinite(saved.walletBalance))walletBalance=saved.walletBalance;
-if(Number.isFinite(saved.withdrawWalletBalance))withdrawWalletBalance=saved.withdrawWalletBalance;
+
+if(Array.isArray(saved.expiredItems)){
+expiredItems=saved.expiredItems;
+}
+
+if(Number.isFinite(saved.walletBalance)){
+walletBalance=saved.walletBalance;
+}
+
+if(Number.isFinite(saved.withdrawWalletBalance)){
+withdrawWalletBalance=saved.withdrawWalletBalance;
+}
 }
 }catch(e){}
 
-if(!activeItems.some(x=>Number(x.number)===1&&Number(x.amount)===800)){
-activeItems.unshift({...defaultActive[0]});
-}
+activeItems=[];
 
 if(!expiredItems.some(x=>x.id==='initial-expired-2500')){
 expiredItems.unshift({...initialExpired[0]});
 }
+
+if(!expiredItems.some(x=>x.id==='initial-expired-800')){
+expiredItems.push({...initialExpired[1]});
+}
+
+saveState();
 }
 
 function saveState(){
@@ -309,5 +317,5 @@ renderPackages();
 show('login');
 </script>
 </body>
-  </html>
-  
+                                               </html>
+                                                                                                                          
