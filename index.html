@@ -156,7 +156,7 @@ if(Number.isFinite(saved.walletBalance))walletBalance=saved.walletBalance;
 if(Number.isFinite(saved.withdrawWalletBalance))withdrawWalletBalance=saved.withdrawWalletBalance;
 }
 }catch(e){}
-activeItems=[];
+activeItems=[{id:'active-package-800',number:1,amount:800,value:4000,days:1}];
 if(!expiredItems.some(x=>x.id==='initial-expired-2500'))expiredItems.unshift({...initialExpired[0]});
 if(!expiredItems.some(x=>x.id==='initial-expired-800'))expiredItems.push({...initialExpired[1]});
 saveState();
