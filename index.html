@@ -70,7 +70,7 @@ a{color:var(--g)}
 <form id="loginForm" autocomplete="on">
 <div class="field"><label for="email">Email Address</label><input id="email" type="email" placeholder="Enter email" autocomplete="username"></div>
 <div class="field"><label for="pass">Password</label><input id="pass" type="password" placeholder="Enter password" autocomplete="current-password" required></div>
-<button class="btn" type="submit">LOGIN</button><p id="err" class="muted" role="status"></p>
+<button class="btn" type="button" onclick="login()">LOGIN</button><p id="err" class="muted" role="status"></p>
 </form>
 </section>
 
@@ -307,7 +307,4 @@ return false;
 function openWithdrawalReceipt(){
 if(!bankDetails.holder||!bankDetails.bankName||!bankDetails.account||!bankDetails.ifsc){
 alert('Please enter and save your bank details first.');
-show('account');
-return;
-}
-docum
+show('account'
