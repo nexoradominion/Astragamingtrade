@@ -220,16 +220,22 @@ saveState();
 function saveState(){
 try{localStorage.setItem(STORAGE_KEY,JSON.stringify({activeItems,expiredItems,walletBalance,withdrawWalletBalance}));}catch(e){}
 }
-function login(){
-const enteredPassword=document.getElementById('pass').value.trim();
-if(enteredPassword!==PASSWORD){
-document.getElementById('err').textContent='Incorrect password';
-return;
+window.login = function login(){
+const passwordInput = document.getElementById('pass');
+const errorMessage = document.getElementById('err');
+if (!passwordInput || !errorMessage) {
+  alert('Login page error. Please refresh the page and try again.');
+  return;
 }
-loggedIn=true;
-document.getElementById('err').textContent='';
+const enteredPassword = passwordInput.value.trim();
+if (enteredPassword !== PASSWORD) {
+  errorMessage.textContent = 'Incorrect password. Please enter 5432190.';
+  return;
+}
+loggedIn = true;
+errorMessage.textContent = '';
 show('home');
-}
+};
 document.getElementById('loginForm').addEventListener('submit',function(event){
 event.preventDefault();
 login();
@@ -301,10 +307,4 @@ try{localStorage.setItem(BANK_STORAGE_KEY,JSON.stringify(bankDetails));}catch(er
  return false;
 }
 document.getElementById('msg').textContent='Bank details saved in this browser on this device. They are not sent to a server.';
-document.getElementById('msg').classList.remove('hidden');
-return false;
-}
-function openWithdrawalReceipt(){
-if(!bankDetails.holder||!bankDetails.bankName||!bankDetails.account||!bankDetails.ifsc){
-alert('Please enter and save your bank details first.');
-show('account'
+document.getElementById('msg').classList
