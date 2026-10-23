@@ -45,11 +45,19 @@ input:focus{outline:1px solid var(--g)}
 .wallet-action .wallet-icon{font-size:15px}
 .wallet-action .wallet-arrow{margin-left:3px;font-size:17px}
 .notice{border:1px solid var(--g);padding:12px;border-radius:10px;color:var(--g);font-size:13px;line-height:1.5}
+.receipt{border:1px solid var(--line);border-radius:16px;padding:18px;background:linear-gradient(145deg,#171717,#090909);margin:14px 0}
+.receipt-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:13px 0}
+.receipt-row span:first-child{color:#bdbdbd;font-size:14px}
+.receipt-row span:last-child{text-align:right;overflow-wrap:anywhere}
+.receipt-total{font-size:26px;font-weight:800;color:var(--green)}
+.processing{border:1px solid var(--green);border-radius:12px;padding:13px;background:#102017;color:var(--green);font-weight:800}
+.demo-note{border-radius:10px;padding:12px;background:#171717;color:#ddd;font-size:13px;line-height:1.5;margin-top:12px}
 body.logged-out footer{display:none!important}
 footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#111;border-top:1px solid var(--line);padding:8px 2px calc(8px + env(safe-area-inset-bottom));z-index:3}
 footer button{border:0;background:none;color:#bbb;font-weight:bold;font-size:12px;padding:4px;cursor:pointer}
 footer .active{color:var(--g)}
 footer span{display:block;font-size:21px;margin-bottom:4px}
+a{color:var(--g)}
 </style>
 </head>
 <body class="logged-out">
@@ -72,7 +80,7 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <section id="packages" class="hidden">
 <div class="panel">
 <h1>PACKAGES</h1>
-<p class="muted">All financial decisions made while using this platform are solely your responsibility and at your own risk.</p>
+<p class="muted">Demo packages only. No real investment or payout is made through this page.</p>
 <div class="grid">
 <button class="btn secondary" onclick="show('activePackages')">ACTIVE PACKAGES</button>
 <button class="btn secondary" onclick="show('expiredPackages')">EXPIRED PACKAGES</button>
@@ -90,7 +98,7 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 
 <section id="qrpage" class="panel hidden">
 <h1>ADD MONEY</h1>
-<p class="muted">Experiencing QR payment limit restrictions? Contact us via email for bank account details.</p>
+<p class="muted">This is a demonstration page. Do not send money using an unverified QR code.</p>
 <div class="qr"><img src="IMG-20261009-WA0016.jpg" alt="QR code" onerror="this.style.display='none';document.getElementById('qrf').classList.remove('hidden')"><div id="qrf" class="hidden">QR image not available. Add IMG-20261009-WA0016.jpg to the repository root.</div></div>
 <button class="btn secondary" onclick="show('account')">← BACK TO ACCOUNT</button>
 </section>
@@ -100,23 +108,41 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 <h1>MY ACCOUNT</h1>
 <div class="grid">
 <div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div><button class="wallet-action" type="button" onclick="show('qrpage')"><span class="wallet-icon">▣</span><span>ADD MONEY</span><span class="wallet-arrow">›</span></button></div>
-<div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹10,000</div></div>
+<div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹14,000</div><button class="btn addMoneySmall" type="button" onclick="openWithdrawalReceipt()">WITHDRAW →</button></div>
 </div>
-<p class="muted">Please ensure that your bank details are accurate and valid before submitting.</p>
+<p class="muted">Demo account page. No real bank transfer is performed.</p>
 </div>
 <div class="panel">
 <h1>BANK DETAILS</h1>
-<form onsubmit="return saveBankDetails(event)">
+<form id="bankForm" onsubmit="return saveBankDetails(event)">
 <div class="field"><label for="holder">Account Holder Name</label><input id="holder" placeholder="Enter account holder name" autocomplete="off" required></div>
 <div class="field"><label for="bankName">Bank Name</label><input id="bankName" placeholder="Enter bank name" autocomplete="off" required></div>
 <div class="field"><label for="bank">Account Number</label><input id="bank" inputmode="numeric" placeholder="Enter account number" autocomplete="off" required></div>
 <div class="field"><label for="ifsc">IFSC Code</label><input id="ifsc" placeholder="Enter IFSC code" autocomplete="off" required></div>
-<button class="btn" type="submit">SAVE</button><p class="muted hidden" id="msg" role="status">Your data is not stored.</p>
+<button class="btn" type="submit">SAVE</button><p class="muted hidden" id="msg" role="status">Bank details saved for this page session only.</p>
 </form>
 </div>
 </section>
 
-<section id="support" class="panel hidden"><h1>SUPPORT</h1><p>Email: <a style="color:var(--g)" href="mailto:astragamingtrade@gmail.com">astragamingtrade@gmail.com</a></p></section>
+<section id="withdrawalReceipt" class="panel hidden">
+<div class="top"><h1>WITHDRAWAL RECEIPT</h1><span class="pill">DEMO</span></div>
+<p class="muted">AstralLink Gaming Zone</p>
+<div class="receipt">
+<div class="receipt-row"><span>Account Holder</span><span id="receiptHolder">—</span></div>
+<div class="receipt-row"><span>Bank Name</span><span id="receiptBank">—</span></div>
+<div class="receipt-row"><span>Account Number</span><span id="receiptAccount">—</span></div>
+<div class="receipt-row"><span>IFSC Code</span><span id="receiptIfsc">—</span></div>
+<hr style="border:0;border-top:1px solid #705919">
+<div class="receipt-row"><span>Withdrawal Amount</span><strong>₹14,000.00</strong></div>
+<div class="receipt-row"><span>Illustrative deduction (8%)</span><strong style="color:#ff5757">− ₹1,120.00</strong></div>
+<div class="receipt-row"><span>Illustrative net amount</span><span class="receipt-total">₹12,880.00</span></div>
+<div class="processing">● PROCESSING (DEMO STATUS)</div>
+<div class="demo-note"><strong style="color:#ffd33d">Please Stay Patient</strong><br>Your withdrawal request is being shown for demonstration purposes only. No payment has been initiated or confirmed. Please remain patient while reviewing this demo receipt.</div>
+</div>
+<button class="btn secondary" onclick="show('account')">← BACK TO ACCOUNT</button>
+</section>
+
+<section id="support" class="panel hidden"><h1>SUPPORT</h1><p>Email: <a href="mailto:astragamingtrade@gmail.com">astragamingtrade@gmail.com</a></p><p class="muted">Demo website support.</p></section>
 </main>
 
 <footer>
@@ -145,6 +171,7 @@ let walletBalance=0;
 let withdrawWalletBalance=14000;
 let activeItems=[];
 let expiredItems=initialExpired.map(x=>({...x}));
+let bankDetails={holder:'',bankName:'',account:'',ifsc:''};
 
 function loadState(){
 try{
@@ -179,7 +206,7 @@ event.preventDefault();
 login();
 });
 function show(id){
-const pages=['login','home','packages','qrpage','activePackages','expiredPackages','account','support'];
+const pages=['login','home','packages','qrpage','activePackages','expiredPackages','account','support','withdrawalReceipt'];
 if(!pages.includes(id))return;
 if(id!=='login'&&!loggedIn)id='login';
 document.body.classList.toggle('logged-out',!loggedIn);
@@ -196,7 +223,7 @@ if(!p)return;
 if(walletBalance<p.amount){
 const message=document.getElementById('walletError'+n);
 if(message){
-message.textContent='Insufficient Balance. Required: ₹'+p.amount.toLocaleString('en-IN')+' | Available: ₹'+walletBalance.toLocaleString('en-IN')+'. Please add funds to continue.';
+message.textContent='Insufficient Balance. Required: ₹'+p.amount.toLocaleString('en-IN')+' | Available: ₹'+walletBalance.toLocaleString('en-IN')+'. This demo does not accept real funds.';
 message.classList.remove('hidden');
 }
 return;
@@ -233,8 +260,28 @@ saveState();
 }
 function saveBankDetails(e){
 e.preventDefault();
+bankDetails={
+holder:document.getElementById('holder').value.trim(),
+bankName:document.getElementById('bankName').value.trim(),
+account:document.getElementById('bank').value.trim(),
+ifsc:document.getElementById('ifsc').value.trim().toUpperCase()
+};
+document.getElementById('msg').textContent='Bank details saved in this page session only; they are not sent to a server.';
 document.getElementById('msg').classList.remove('hidden');
 return false;
+}
+function openWithdrawalReceipt(){
+if(!bankDetails.holder||!bankDetails.bankName||!bankDetails.account||!bankDetails.ifsc){
+alert('Please enter and save your bank details first.');
+show('account');
+return;
+}
+document.getElementById('receiptHolder').textContent=bankDetails.holder;
+document.getElementById('receiptBank').textContent=bankDetails.bankName;
+const a=bankDetails.account;
+document.getElementById('receiptAccount').textContent=a.length>4?'••••••••'+a.slice(-4):a;
+document.getElementById('receiptIfsc').textContent=bankDetails.ifsc;
+show('withdrawalReceipt');
 }
 function logout(){
 loggedIn=false;
@@ -243,10 +290,11 @@ document.getElementById('email').value='';
 document.getElementById('err').textContent='';
 show('login');
 }
+loadState();
 updateBalance();
 renderPackages();
 show('login');
 </script>
 </body>
-                                                                                                                                                                                                 </html>
-                                                                                                                                                                    
+  </html>
+  
