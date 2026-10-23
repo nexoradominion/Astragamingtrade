@@ -139,7 +139,7 @@ footer span{display:block;font-size:21px;margin-bottom:4px}
 
 <script>
 const PASSWORD='754219';
-const STORAGE_KEY='astralink_wallet_demo_v5';
+const STORAGE_KEY='astralink_wallet_demo_v6';
 
 const packageInfo={
 1:{amount:800,value:4000,days:1},
@@ -150,12 +150,12 @@ const packageInfo={
 };
 
 const initialExpired=[
-{id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3}
+{id:'initial-expired-5000',number:2,amount:5000,value:30000,days:10},
+{id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3},
+{id:'initial-expired-800',number:1,amount:800,value:4000,days:1}
 ];
 
-const defaultActive=[
-{id:'active-package-800',number:1,amount:800,value:4000,days:1}
-];
+const defaultActive=[];
 
 let loggedIn=false;
 let walletBalance=0;
@@ -175,13 +175,8 @@ if(Number.isFinite(saved.withdrawWalletBalance))withdrawWalletBalance=saved.with
 }
 }catch(e){}
 
-if(!activeItems.some(x=>Number(x.number)===1&&Number(x.amount)===800)){
-activeItems.unshift({...defaultActive[0]});
-}
-
-if(!expiredItems.some(x=>x.id==='initial-expired-2500')){
-expiredItems.unshift({...initialExpired[0]});
-}
+activeItems=[];
+expiredItems=initialExpired.map(x=>({...x}));
 }
 
 function saveState(){
@@ -309,5 +304,5 @@ renderPackages();
 show('login');
 </script>
 </body>
-                                                                                                                                                                                                                                                                                       </html>
-                                                                                                    
+  </html>
+  
