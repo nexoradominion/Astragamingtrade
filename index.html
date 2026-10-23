@@ -44,6 +44,8 @@ input:focus{outline:1px solid var(--g)}
 .wallet-action:focus-visible{outline:1px solid var(--g);outline-offset:4px;border-radius:4px}
 .wallet-action .wallet-icon{font-size:15px}
 .wallet-action .wallet-arrow{margin-left:3px;font-size:17px}
+.withdraw-action{display:inline-flex;align-items:center;gap:7px;width:auto;margin-top:10px;padding:4px 0;border:0;background:transparent;color:var(--g);font-size:13px;font-weight:700;line-height:1.4;cursor:pointer}
+.withdraw-action:focus-visible{outline:1px solid var(--g);outline-offset:4px;border-radius:4px}
 .notice{border:1px solid var(--g);padding:12px;border-radius:10px;color:var(--g);font-size:13px;line-height:1.5}
 .receipt{border:1px solid var(--line);border-radius:16px;padding:18px;background:linear-gradient(145deg,#171717,#090909);margin:14px 0}
 .receipt-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:13px 0}
@@ -108,7 +110,7 @@ a{color:var(--g)}
 <h1>MY ACCOUNT</h1>
 <div class="grid">
 <div class="stat"><div class="muted">PACKAGE WALLET</div><div class="value" id="balance">₹0</div><button class="wallet-action" type="button" onclick="show('qrpage')"><span class="wallet-icon">▣</span><span>ADD MONEY</span><span class="wallet-arrow">›</span></button></div>
-<div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹14,000</div><button class="btn addMoneySmall" type="button" onclick="openWithdrawalReceipt()">WITHDRAW →</button></div>
+<div class="stat"><div class="muted">WITHDRAW WALLET</div><div class="value" id="withdrawBalance">₹14,000</div><button class="withdraw-action" type="button" onclick="openWithdrawalReceipt()"><span>↗</span><span>WITHDRAW</span><span class="wallet-arrow">›</span></button></div>
 </div>
 <p class="muted">Demo account page. No real bank transfer is performed.</p>
 </div>
@@ -125,19 +127,29 @@ a{color:var(--g)}
 </section>
 
 <section id="withdrawalReceipt" class="panel hidden">
-<div class="top"><h1>WITHDRAWAL RECEIPT</h1><span class="pill">DEMO</span></div>
-<p class="muted">AstralLink Gaming Zone</p>
+<div class="top"><h1>WITHDRAWAL</h1><span class="pill">DEMO</span></div>
+<p class="muted">AstralLink Gaming Zone · Demo withdrawal calculator</p>
 <div class="receipt">
 <div class="receipt-row"><span>Account Holder</span><span id="receiptHolder">—</span></div>
 <div class="receipt-row"><span>Bank Name</span><span id="receiptBank">—</span></div>
 <div class="receipt-row"><span>Account Number</span><span id="receiptAccount">—</span></div>
 <div class="receipt-row"><span>IFSC Code</span><span id="receiptIfsc">—</span></div>
 <hr style="border:0;border-top:1px solid #705919">
-<div class="receipt-row"><span>Withdrawal Amount</span><strong>₹14,000.00</strong></div>
-<div class="receipt-row"><span>Illustrative deduction (8%)</span><strong style="color:#ff5757">− ₹1,120.00</strong></div>
-<div class="receipt-row"><span>Illustrative net amount</span><span class="receipt-total">₹12,880.00</span></div>
-<div class="processing">● PROCESSING (DEMO STATUS)</div>
-<div class="demo-note"><strong style="color:#ffd33d">Please Stay Patient</strong><br>Your withdrawal request is being shown for demonstration purposes only. No payment has been initiated or confirmed. Please remain patient while reviewing this demo receipt.</div>
+<form id="withdrawForm" onsubmit="return processDemoWithdrawal(event)">
+<div class="field"><label for="withdrawAmount">Enter withdrawal amount (₹)</label><input id="withdrawAmount" type="number" min="1" step="0.01" inputmode="decimal" placeholder="Maximum ₹14,000" required></div>
+<p class="muted" id="withdrawAvailable">Available demo balance: ₹14,000</p>
+<button class="btn" type="submit">GENERATE DEMO RECEIPT</button>
+<p id="withdrawError" class="muted hidden" role="status" style="color:var(--red)"></p>
+</form>
+<div id="generatedReceipt" class="hidden">
+<hr style="border:0;border-top:1px solid #705919;margin:20px 0">
+<h2>WITHDRAWAL RECEIPT</h2>
+<div class="receipt-row"><span>Requested amount</span><strong id="receiptGross">₹0.00</strong></div>
+<div class="receipt-row"><span>Illustrative deduction (8%, demo only)</span><strong id="receiptFee" style="color:#ff5757">− ₹0.00</strong></div>
+<div class="receipt-row"><span>Illustrative net amount</span><span class="receipt-total" id="receiptNet">₹0.00</span></div>
+<div class="processing">● DEMO — NOT A REAL PAYMENT</div>
+<div class="demo-note"><strong style="color:#ffd33d">Please Stay Patient</strong><br>This is a simulated receipt for demonstration only. No bank transfer or tax deduction has occurred. The demo wallet balance is reduced by the requested amount.</div>
+</div>
 </div>
 <button class="btn secondary" onclick="show('account')">← BACK TO ACCOUNT</button>
 </section>
@@ -155,6 +167,7 @@ a{color:var(--g)}
 <script>
 const PASSWORD='5432190';
 const STORAGE_KEY='astralink_wallet_demo_v5';
+const BANK_STORAGE_KEY='astralink_bank_details_demo_v1';
 const packageInfo={
 1:{amount:800,value:4000,days:1},
 2:{amount:5000,value:30000,days:10},
@@ -164,7 +177,8 @@ const packageInfo={
 };
 const initialExpired=[
 {id:'initial-expired-2500',number:1,amount:2500,value:6000,days:3},
-{id:'initial-expired-800',number:1,amount:800,value:4000,days:1}
+{id:'initial-expired-800-a',number:1,amount:800,value:4000,days:1},
+{id:'initial-expired-800-b',number:1,amount:800,value:4000,days:1}
 ];
 let loggedIn=false;
 let walletBalance=0;
@@ -172,6 +186,13 @@ let withdrawWalletBalance=14000;
 let activeItems=[];
 let expiredItems=initialExpired.map(x=>({...x}));
 let bankDetails={holder:'',bankName:'',account:'',ifsc:''};
+function populateBankForm(){
+if(!bankDetails)return;
+document.getElementById('holder').value=bankDetails.holder||'';
+document.getElementById('bankName').value=bankDetails.bankName||'';
+document.getElementById('bank').value=bankDetails.account||'';
+document.getElementById('ifsc').value=bankDetails.ifsc||'';
+}
 
 function loadState(){
 try{
@@ -182,10 +203,18 @@ if(Array.isArray(saved.expiredItems))expiredItems=saved.expiredItems;
 if(Number.isFinite(saved.walletBalance))walletBalance=saved.walletBalance;
 if(Number.isFinite(saved.withdrawWalletBalance))withdrawWalletBalance=saved.withdrawWalletBalance;
 }
+const savedBank=localStorage.getItem(BANK_STORAGE_KEY);
+if(savedBank){
+const parsedBank=JSON.parse(savedBank);
+if(parsedBank&&typeof parsedBank==='object'){
+bankDetails={holder:String(parsedBank.holder||''),bankName:String(parsedBank.bankName||''),account:String(parsedBank.account||''),ifsc:String(parsedBank.ifsc||'')};
+}
+}
 }catch(e){}
 activeItems=[{id:'active-package-800',number:1,amount:800,value:4000,days:1}];
 if(!expiredItems.some(x=>x.id==='initial-expired-2500'))expiredItems.unshift({...initialExpired[0]});
-if(!expiredItems.some(x=>x.id==='initial-expired-800'))expiredItems.push({...initialExpired[1]});
+if(!expiredItems.some(x=>x.id==='initial-expired-800-a')&&!expiredItems.some(x=>x.id==='initial-expired-800'))expiredItems.push({...initialExpired[1]});
+if(!expiredItems.some(x=>x.id==='initial-expired-800-b'))expiredItems.push({...initialExpired[2]});
 saveState();
 }
 function saveState(){
@@ -266,7 +295,12 @@ bankName:document.getElementById('bankName').value.trim(),
 account:document.getElementById('bank').value.trim(),
 ifsc:document.getElementById('ifsc').value.trim().toUpperCase()
 };
-document.getElementById('msg').textContent='Bank details saved in this page session only; they are not sent to a server.';
+try{localStorage.setItem(BANK_STORAGE_KEY,JSON.stringify(bankDetails));}catch(err){
+ document.getElementById('msg').textContent='Could not save details in this browser. Please check browser storage settings.';
+ document.getElementById('msg').classList.remove('hidden');
+ return false;
+}
+document.getElementById('msg').textContent='Bank details saved in this browser on this device. They are not sent to a server.';
 document.getElementById('msg').classList.remove('hidden');
 return false;
 }
@@ -276,25 +310,4 @@ alert('Please enter and save your bank details first.');
 show('account');
 return;
 }
-document.getElementById('receiptHolder').textContent=bankDetails.holder;
-document.getElementById('receiptBank').textContent=bankDetails.bankName;
-const a=bankDetails.account;
-document.getElementById('receiptAccount').textContent=a.length>4?'••••••••'+a.slice(-4):a;
-document.getElementById('receiptIfsc').textContent=bankDetails.ifsc;
-show('withdrawalReceipt');
-}
-function logout(){
-loggedIn=false;
-document.getElementById('pass').value='';
-document.getElementById('email').value='';
-document.getElementById('err').textContent='';
-show('login');
-}
-loadState();
-updateBalance();
-renderPackages();
-show('login');
-</script>
-</body>
-  </html>
-  
+docum
